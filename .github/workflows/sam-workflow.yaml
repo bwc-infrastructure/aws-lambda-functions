@@ -3,7 +3,8 @@ name: Deploy Serverless Function
 on:
   push:
     branches: [main]
-
+env:
+  BUCKET_NAME: ${{ vars.SAM_BUCKET_NAME }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,6 +22,13 @@ jobs:
 
       - name: AWS Version
         run: aws --version
+      - name: Create S3 Bucket
+        run: ./create-s3.sh
+
+      # - name: Validate and Deploy AWS Serverless Functions
+      #   run: |
+      #     aws cloudformation validate-template --template-body file://template.yaml
+      #     aws cloudformation package
 
       # - name: Deploy serverless function
       #   run: |

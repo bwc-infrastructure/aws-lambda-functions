@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS Serverless Functions
+# Metadata: 
+
+# Parameters: 
+
+# Mappings: 
+
+# Conditions: 
+
+Resources: 
+  CreatePipelineStack:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    DependsOn: WebhookSecretsManager
+    Properties:
+      FunctionName: !Sub [
+          "Create-Pipeline-Lambda-${ID}",
+          ID: !Select [2, !Split ["/", !Ref AWS::StackId]],
+        ] # Append the stack UUID
+      CodeUri: src/create-pipeline
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      # ReservedConcurrentExecutions: 9
+      Environment:
+        Variables:
+          GITHUB_WEBHOOK_SECRET_ARN: !Ref WebhookSecretsManager
+          EVENT_BUS_NAME: !Ref EventBusName
+      MemorySize: 128
+      Timeout: 100
+      FunctionUrlConfig:
+        AuthType: NONE
+      Policies:
+        - EventBridgePutEventsPolicy:
+            EventBusName: !Ref EventBusName
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:DescribeSecret
+                - secretsmanager:GetSecretValue
+              Resource: !Ref WebhookSecretsManager
