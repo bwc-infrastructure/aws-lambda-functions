@@ -11,7 +11,6 @@ Description: AWS Serverless Functions
 Resources: 
   CreatePipelineStack:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    DependsOn: WebhookSecretsManager
     Properties:
       FunctionName: !Sub [
           "Create-Pipeline-Lambda-${ID}",
@@ -20,15 +19,8 @@ Resources:
       CodeUri: src/create-pipeline
       Handler: app.lambda_handler
       Runtime: python3.8
-      # ReservedConcurrentExecutions: 9
-      # Environment:
-        # Variables:
-        #   GITHUB_WEBHOOK_SECRET_ARN: !Ref WebhookSecretsManager
-        #   EVENT_BUS_NAME: !Ref EventBusName
       MemorySize: 128
       Timeout: 100
-      # FunctionUrlConfig:
-      #   AuthType: NONE
       # Policies:
       #   - EventBridgePutEventsPolicy:
       #       EventBusName: !Ref EventBusName
