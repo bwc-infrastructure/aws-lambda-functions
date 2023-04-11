@@ -22,13 +22,14 @@ jobs:
 
       - name: AWS Version
         run: aws --version
+
       - name: Create S3 Bucket
         run: sh create-s3.sh
+      
 
-      # - name: Validate and Deploy AWS Serverless Functions
-      #   run: |
-      #     aws cloudformation validate-template --template-body file://template.yaml
-      #     aws cloudformation package
+      - name: Validate and Deploy AWS Serverless Functions
+        run: |
+          aws cloudformation validate-template --template-body file://template.yaml
 
       # - name: Deploy serverless function
       #   run: |
