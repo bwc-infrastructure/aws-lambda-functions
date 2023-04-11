@@ -5,6 +5,7 @@ on:
     branches: [main]
 env:
   BUCKET_NAME: ${{ vars.SAM_BUCKET_NAME }}
+  STACK_NAME: bwc-infra-lambda-func
 jobs:
   deploy:
     runs-on: ubuntu-latest
