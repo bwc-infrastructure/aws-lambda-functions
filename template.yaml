@@ -10,7 +10,7 @@ Description: Hello World
 # Conditions: 
 
 Resources: 
-  CreatePipelineStack:
+  CreatePipelineLambda:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       FunctionName: !Sub [
@@ -32,3 +32,27 @@ Resources:
       #           - secretsmanager:DescribeSecret
       #           - secretsmanager:GetSecretValue
       #         Resource: !Ref WebhookSecretsManager
+  GithubHandlerLambda:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: !Sub [
+          "Create-Pipeline-Lambda-${ID}",
+          ID: !Select [2, !Split ["/", !Ref AWS::StackId]],
+        ] # Append the stack UUID
+      CodeUri: src/github-handler
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      MemorySize: 128
+      Timeout: 100
+  UpdateGithubBuildStatusLambda:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: !Sub [
+          "Create-Pipeline-Lambda-${ID}",
+          ID: !Select [2, !Split ["/", !Ref AWS::StackId]],
+        ] # Append the stack UUID
+      CodeUri: src/github-handler
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      MemorySize: 128
+      Timeout: 100
