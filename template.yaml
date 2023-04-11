@@ -22,20 +22,20 @@ Resources:
       Runtime: python3.8
       # ReservedConcurrentExecutions: 9
       Environment:
-        Variables:
-          GITHUB_WEBHOOK_SECRET_ARN: !Ref WebhookSecretsManager
-          EVENT_BUS_NAME: !Ref EventBusName
+        # Variables:
+        #   GITHUB_WEBHOOK_SECRET_ARN: !Ref WebhookSecretsManager
+        #   EVENT_BUS_NAME: !Ref EventBusName
       MemorySize: 128
       Timeout: 100
-      FunctionUrlConfig:
-        AuthType: NONE
-      Policies:
-        - EventBridgePutEventsPolicy:
-            EventBusName: !Ref EventBusName
-        - Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Action:
-                - secretsmanager:DescribeSecret
-                - secretsmanager:GetSecretValue
-              Resource: !Ref WebhookSecretsManager
+      # FunctionUrlConfig:
+      #   AuthType: NONE
+      # Policies:
+      #   - EventBridgePutEventsPolicy:
+      #       EventBusName: !Ref EventBusName
+      #   - Version: "2012-10-17"
+      #     Statement:
+      #       - Effect: Allow
+      #         Action:
+      #           - secretsmanager:DescribeSecret
+      #           - secretsmanager:GetSecretValue
+      #         Resource: !Ref WebhookSecretsManager
