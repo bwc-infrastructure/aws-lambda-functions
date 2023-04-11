@@ -30,7 +30,7 @@ jobs:
       - name: Validate and Deploy AWS Serverless Functions
         run: |
           aws cloudformation validate-template --template-body file://template.yaml
-
+          aws cloudformation package  --template-file template.yaml --s3-bucket ${BUCKET_NAME} --s3-prefix bwc-infra --output-template-file template-package.yaml
       # - name: Deploy serverless function
       #   run: |
       #     cd my-serverless-function
