@@ -21,7 +21,7 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.8
       # ReservedConcurrentExecutions: 9
-      Environment:
+      # Environment:
         # Variables:
         #   GITHUB_WEBHOOK_SECRET_ARN: !Ref WebhookSecretsManager
         #   EVENT_BUS_NAME: !Ref EventBusName
