@@ -39,3 +39,8 @@ def lambda_handler(event, context):
         print('Build status updated successfully!')
     else:
         print(f'Error updating build status: {response.status_code} - {response.text}')
+    # TO-DO implement
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
